@@ -1,0 +1,20 @@
+services:
+  redis:
+    image: redis:7
+    container_name: redis
+    command: redis-server --appendonly yes  # Habilita persistencia AOF
+    ports:
+      - "6379:6379"  # Puerto expuesto para conexión desde Spring Boot u otros clientes
+    volumes:
+      - redis-data:/data
+    restart: always
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redisinsight
+    ports:
+      - "9011:8001"  # Interfaz web accesible desde http://localhost:8001
+    restart: always
+
+volumes:
+  redis-data
